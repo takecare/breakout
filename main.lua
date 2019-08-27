@@ -4,6 +4,11 @@ StateMachine = require('modules/StateMachine')
 
 BaseState = require('src/states/BaseState')
 StartState = require('src/states/StartState')
+HighScoreState = require('src/states/HighScoreState')
+NewHighScoreState = require('src/states/NewHighScoreState')
+PlayState = require('src/states/PlayState')
+SelectPaddleState = require('src/states/SelectPaddleState')
+PlayState = require('src/states/PlayState')
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -53,18 +58,37 @@ function love.load()
         resizable = true
     })
 
-    -- TODO setup state machine
     gStateMachine = StateMachine {
-        ['start'] = function() return StartState() end
+        ['start'] = function() return StartState() end,
+        ['higscores'] = function() return HighScoreState() end,
+        ['newhighscore'] = function() return NewHighScoreState() end,
+        ['play'] = function() return PlayState() end,
+        ['select'] = function() return SelectPaddleState() end,
+        ['serve'] = function() return ServeState() end,
+        ['victory'] = function() return VictoryState() end,
     }
+    gStateMachine:change('start')
 end
 
 function love.update(dt)
-    -- TODO forward to state
+    gStateMachine:update(dt)
 end
 
 function love.draw()
-    -- TODO forward to state
+    push:apply('start')
+
+    love.graphics.draw(
+        gTextures['background'],
+        0,
+        0,
+        0,
+        VIRTUAL_WIDTH / gTextures['background']:getWidth(),
+        VIRTUAL_HEIGHT / gTextures['background']:getHeight()
+    )
+
+    gStateMachine:render()
+
+    push:apply('end')
     displayFps()
 end
 
