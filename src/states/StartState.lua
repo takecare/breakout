@@ -28,10 +28,6 @@ function updateMenuColor(isSelected)
     end
 end
 
-function StartState:update(dt)
-    --
-end
-
 function StartState:render()
     love.graphics.setColor(1, 1, 1)
     love.graphics.setFont(gFonts['large'])

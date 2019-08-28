@@ -18,6 +18,7 @@ VIRTUAL_HEIGHT = 243
 
 gFonts = {}
 gTextures = {}
+gSprites = {}
 gSounds = {}
 gStateMachine = {}
 
@@ -36,6 +37,8 @@ function love.load()
     gTextures['breakout'] = love.graphics.newImage('assets/breakout.png')
     gTextures['hearts'] = love.graphics.newImage('assets/hearts.png')
     gTextures['particle'] = love.graphics.newImage('assets/particle.png')
+
+    -- gSprites['paddles'] = love.graphics.newQuad(x, y, width, height, sw, sh)
 
     gSounds['brickhit1'] = love.audio.newSource('assets/brick-hit-1.wav', 'static')
     gSounds['brickhit2'] = love.audio.newSource('assets/brick-hit-2.wav', 'static')
