@@ -23,7 +23,10 @@ end
 
 function PlayState:keyPressed(key)
     if key == 'escape' then
+        gSounds['pause']:play()
         self.isPaused = not self.isPaused
+    else 
+        self.paddle:keyPressed(key)
     end
 end
 
@@ -33,7 +36,12 @@ function PlayState:render()
         self.color = { r, g, b, a }
         love.graphics.setColor({ 0.5, 0.5, 0.5, 0.5 })
     end
+
     self.paddle:render()
+
+    if self.isPaused then
+        love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+    end
 end
 
 return PlayState

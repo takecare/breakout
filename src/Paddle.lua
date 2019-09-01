@@ -1,13 +1,14 @@
 local Paddle = Class{__includes = Object}
 
-local PADDLE_Y_THRESHOLD = 32
+local PADDLE_X_OFFSET = 32
+local PADDLE_Y_OFFSET = 32
 local SPEED = 110
 
-function Paddle:init(x, y, quad)
+function Paddle:init(x, y)
     self.skin = 1
     self.size = 2
-    self.x = x ~= nil and x or VIRTUAL_WIDTH / 2 - 0
-    self.y = y ~= nil and y or VIRTUAL_HEIGHT - PADDLE_Y_THRESHOLD
+    self.x = x ~= nil and x or VIRTUAL_WIDTH / 2 - PADDLE_X_OFFSET
+    self.y = y ~= nil and y or VIRTUAL_HEIGHT - PADDLE_Y_OFFSET
     self.dx = 0
 end
 
@@ -19,6 +20,12 @@ function Paddle:handleInput()
         self.dx = SPEED
     else
         self.dx = 0
+    end
+end
+
+function Paddle:keyPressed(key)
+    if key == 'p' then
+        self.skin = self.skin < 4 and self.skin + 1 or 1
     end
 end
 
@@ -34,7 +41,7 @@ function Paddle:render()
 end
 
 function Paddle:quad()
-    return gSprites['paddles'][self.skin]
+    return gSprites['paddles'][self.size + 4 * (self.skin - 1)]
 end
 
 function Paddle:sprite()
