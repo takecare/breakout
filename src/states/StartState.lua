@@ -11,7 +11,7 @@ local options = {
     },
     {
         title = 'HIGH SCORES',
-        action = function() gStateMachine:change('') end,
+        action = function() gStateMachine:change('highscores') end,
         render = function(this, isSelected)
             updateMenuColor(isSelected)
             love.graphics.printf(this.title, 0, VIRTUAL_HEIGHT / 2 + 85, VIRTUAL_WIDTH, 'center')

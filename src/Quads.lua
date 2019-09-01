@@ -1,4 +1,18 @@
-function generateQuadsPaddles(atlas)
+Quad = Class{}
+
+function Quad:init(sprite, width, height)
+    self.sprite = sprite
+    self.width = width
+    self.height = height
+end
+
+function Quad:print()
+    print(self.sprite)
+    print(self.width)
+    print(self.height)
+end
+
+local generatePaddlesQuads = function (atlas)
     local x = 0
     local y = 64
 
@@ -7,16 +21,16 @@ function generateQuadsPaddles(atlas)
 
     for i = 0, 3 do
         -- smallest
-        quads[counter] = love.graphics.newQuad(x, y, 32, 16, atlas:getDimensions())
+        quads[counter] = Quad(love.graphics.newQuad(x, y, 32, 16, atlas:getDimensions()), 32, 16)
         counter = counter + 1
         -- medium
-        quads[counter] = love.graphics.newQuad(x + 32, y, 64, 16, atlas:getDimensions())
+        quads[counter] = Quad(love.graphics.newQuad(x + 32, y, 64, 16, atlas:getDimensions()), 64, 16)
         counter = counter + 1
         -- large
-        quads[counter] = love.graphics.newQuad(x + 96, y, 96, 16, atlas:getDimensions())
+        quads[counter] = Quad(love.graphics.newQuad(x + 96, y, 96, 16, atlas:getDimensions()), 96, 16)
         counter = counter + 1
         -- huge
-        quads[counter] = love.graphics.newQuad(x, y + 16, 128, 16, atlas:getDimensions())
+        quads[counter] = Quad(love.graphics.newQuad(x, y + 16, 128, 16, atlas:getDimensions()), 128, 16)
         counter = counter + 1
 
         -- prepare X and Y for the next set of paddles
@@ -26,3 +40,5 @@ function generateQuadsPaddles(atlas)
 
     return quads
 end
+
+return generatePaddlesQuads

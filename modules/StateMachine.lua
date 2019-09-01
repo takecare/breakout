@@ -38,7 +38,7 @@ function StateMachine:init(states)
     self.empty = {
         render = function() end,
         update = function() end,
-        keyPressed = function() end,
+        keyPressed = function(key) end,
         enter = function() end,
         exit = function() end
     }

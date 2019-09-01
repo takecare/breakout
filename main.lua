@@ -1,6 +1,7 @@
 Class = require('modules/class')
 push = require('modules/push')
 StateMachine = require('modules/StateMachine')
+generateQuads = require('src/Quads')
 
 BaseState = require('src/states/BaseState')
 StartState = require('src/states/StartState')
@@ -9,6 +10,9 @@ NewHighScoreState = require('src/states/NewHighScoreState')
 PlayState = require('src/states/PlayState')
 SelectPaddleState = require('src/states/SelectPaddleState')
 PlayState = require('src/states/PlayState')
+
+Object = require('src/Object')
+Paddle = require('src/Paddle')
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -23,6 +27,8 @@ gSounds = {}
 gStateMachine = {}
 
 function love.load()
+    love.keyboard.keysDown = {}
+
     math.randomseed(os.time())
     love.graphics.setDefaultFilter('nearest', 'nearest')
     love.window.setTitle('')
@@ -38,7 +44,7 @@ function love.load()
     gTextures['hearts'] = love.graphics.newImage('assets/hearts.png')
     gTextures['particle'] = love.graphics.newImage('assets/particle.png')
 
-    -- gSprites['paddles'] = love.graphics.newQuad(x, y, width, height, sw, sh)
+    gSprites['paddles'] = generateQuads(gTextures['breakout'])
 
     gSounds['brickhit1'] = love.audio.newSource('assets/brick-hit-1.wav', 'static')
     gSounds['brickhit2'] = love.audio.newSource('assets/brick-hit-2.wav', 'static')
@@ -47,7 +53,7 @@ function love.load()
     gSounds['hurt'] = love.audio.newSource('assets/hurt.wav', 'static')
     gSounds['music'] = love.audio.newSource('assets/music.wav', 'static')
     gSounds['noselect'] = love.audio.newSource('assets/no-select.wav', 'static')
-    gSounds['paddlehit'] = love.audio.newSource('assets/paddle-hit.wav', 'static')
+    gSounds['paddlehit'] = love.audio.newSource('assets/paddle-hit.wav', 'static') 
     gSounds['pause'] = love.audio.newSource('assets/pause.wav', 'static')
     gSounds['recover'] = love.audio.newSource('assets/recover.wav', 'static')
     gSounds['score'] = love.audio.newSource('assets/score.wav', 'static')
@@ -63,7 +69,7 @@ function love.load()
 
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
-        ['higscores'] = function() return HighScoreState() end,
+        ['highscores'] = function() return HighScoreState() end,
         ['newhighscore'] = function() return NewHighScoreState() end,
         ['play'] = function() return PlayState() end,
         ['select'] = function() return SelectPaddleState() end,

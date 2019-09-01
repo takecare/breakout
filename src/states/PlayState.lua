@@ -1,5 +1,39 @@
 local PlayState = Class{__includes = BaseState}
 
--- TODO
+function PlayState:init()
+    self.isPaused = false
+    self.color = {}
+    self.paddle = Paddle()
+end
+
+function PlayState:enter(params)
+    -- TODO
+end
+
+function PlayState:exit()
+    -- TODO
+end
+
+function PlayState:update(dt)
+    if self.isPaused then
+        return
+    end
+    self.paddle:update(dt)
+end
+
+function PlayState:keyPressed(key)
+    if key == 'escape' then
+        self.isPaused = not self.isPaused
+    end
+end
+
+function PlayState:render()
+    if self.isPaused then
+        local r, g, b, a = love.graphics.getColor()
+        self.color = { r, g, b, a }
+        love.graphics.setColor({ 0.5, 0.5, 0.5, 0.5 })
+    end
+    self.paddle:render()
+end
 
 return PlayState
