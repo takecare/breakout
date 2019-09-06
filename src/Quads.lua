@@ -1,4 +1,4 @@
---[[local]] generatePaddlesQuads = function (atlas)
+generatePaddlesQuads = function (atlas)
     local x = 0
     local y = 64
 
@@ -27,7 +27,7 @@
     return quads
 end
 
---[[local]] generateBallsQuads = function (atlas)
+generateBallsQuads = function (atlas)
     local x = 96
     local y = 48
 
@@ -51,5 +51,3 @@ end
 
     return quads
 end
-
--- return generatePaddlesQuads, generateBallsQuads

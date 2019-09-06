@@ -2,7 +2,7 @@ Class = require('modules/class')
 push = require('modules/push')
 StateMachine = require('modules/StateMachine')
 Quad = require('src/Quad')
-require('src/Quads') -- generatePaddlesQuads, generateBallsQuads = require('src/Quads')
+require('src/Quads') -- TODO contain quad utils functions
 
 
 BaseState = require('src/states/BaseState')
