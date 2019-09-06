@@ -4,6 +4,7 @@ function PlayState:init()
     self.isPaused = false
     self.color = {}
     self.paddle = Paddle()
+    self.ball = Ball()
 end
 
 function PlayState:enter(params)
@@ -18,6 +19,7 @@ function PlayState:update(dt)
     if self.isPaused then
         return
     end
+    self.ball:update(dt)
     self.paddle:update(dt)
 end
 
@@ -38,6 +40,7 @@ function PlayState:render()
     end
 
     self.paddle:render()
+    self.ball:render()
 
     if self.isPaused then
         love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)

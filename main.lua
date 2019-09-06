@@ -1,7 +1,9 @@
 Class = require('modules/class')
 push = require('modules/push')
 StateMachine = require('modules/StateMachine')
-generateQuads = require('src/Quads')
+Quad = require('src/Quad')
+require('src/Quads') -- generatePaddlesQuads, generateBallsQuads = require('src/Quads')
+
 
 BaseState = require('src/states/BaseState')
 StartState = require('src/states/StartState')
@@ -13,6 +15,7 @@ PlayState = require('src/states/PlayState')
 
 Object = require('src/Object')
 Paddle = require('src/Paddle')
+Ball = require('src/Ball')
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -44,7 +47,8 @@ function love.load()
     gTextures['hearts'] = love.graphics.newImage('assets/hearts.png')
     gTextures['particle'] = love.graphics.newImage('assets/particle.png')
 
-    gSprites['paddles'] = generateQuads(gTextures['breakout'])
+    gSprites['paddles'] = generatePaddlesQuads(gTextures['breakout'])
+    gSprites['balls'] = generateBallsQuads(gTextures['breakout'])
 
     gSounds['brickhit1'] = love.audio.newSource('assets/brick-hit-1.wav', 'static')
     gSounds['brickhit2'] = love.audio.newSource('assets/brick-hit-2.wav', 'static')

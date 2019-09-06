@@ -26,6 +26,8 @@ end
 function Paddle:keyPressed(key)
     if key == 'p' then
         self.skin = self.skin < 4 and self.skin + 1 or 1
+    elseif key == 'space' then
+        -- ?
     end
 end
 

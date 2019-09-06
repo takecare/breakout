@@ -1,18 +1,4 @@
-Quad = Class{}
-
-function Quad:init(sprite, width, height)
-    self.sprite = sprite
-    self.width = width
-    self.height = height
-end
-
-function Quad:print()
-    print(self.sprite)
-    print(self.width)
-    print(self.height)
-end
-
-local generatePaddlesQuads = function (atlas)
+--[[local]] generatePaddlesQuads = function (atlas)
     local x = 0
     local y = 64
 
@@ -41,4 +27,29 @@ local generatePaddlesQuads = function (atlas)
     return quads
 end
 
-return generatePaddlesQuads
+--[[local]] generateBallsQuads = function (atlas)
+    local x = 96
+    local y = 48
+
+    local counter = 1
+    local quads = {}
+
+    for i = 0, 3 do
+        quads[counter] = Quad(love.graphics.newQuad(x, y, 8, 8, atlas:getDimensions()), 8, 8)
+        x = x + 8
+        counter = counter + 1
+    end
+
+    x = 96
+    y = 56
+
+    for i = 0, 2 do
+        quads[counter] = Quad(love.graphics.newQuad(x, y, 8, 8, atlas:getDimensions()), 8, 8)
+        x = x + 8
+        counter = counter + 1
+    end
+
+    return quads
+end
+
+-- return generatePaddlesQuads, generateBallsQuads
