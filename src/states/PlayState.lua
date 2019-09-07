@@ -21,15 +21,28 @@ function PlayState:update(dt)
     end
     self.ball:update(dt)
     self.paddle:update(dt)
+
+    if self.ball:collidesWith(self.paddle) then
+        gSounds['paddlehit']:play()
+        self.ball:collidedWith(self.paddle)
+        self.paddle:collidedWith(self.ball)
+        self:pause()
+    end
 end
 
 function PlayState:keyPressed(key)
     if key == 'escape' then
         gSounds['pause']:play()
-        self.isPaused = not self.isPaused
+        self:pause()
+    elseif key == 'space' then
+        self.ball:serve()
     else 
         self.paddle:keyPressed(key)
     end
+end
+
+function PlayState:pause()
+    self.isPaused = not self.isPaused
 end
 
 function PlayState:render()

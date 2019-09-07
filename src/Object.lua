@@ -10,5 +10,6 @@ function Object:update(dt) end
 function Object:render() end
 function Object:boundingBox() end
 function Object:collidesWith(box) end
+function Object:collidedWith(box) end
 
 return Object

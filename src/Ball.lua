@@ -8,31 +8,50 @@ local LEFT_WALL = 0
 function Ball:init(x, y)
     self.skin = 1
     self.x = x ~= nil and x or VIRTUAL_WIDTH / 2 - 32
-    self.y = y ~= nil and y or VIRTUAL_HEIGHT - 20
+    self.y = y ~= nil and y or VIRTUAL_HEIGHT - 64
     -- self.width = 8
     -- self.height = 8
     self.dx = 0
     self.dy = 0
 
-    -- hack! as when the file is loaded VIRTUAL_* are not defined
+    -- hack: as when the file is loaded VIRTUAL_* are not defined
     BOTTOM_WALL = VIRTUAL_HEIGHT
     RIGHT_WALL = VIRTUAL_WIDTH
 end
 
 function Ball:update(dt)
     local width = self:quad().width
-    if self.x <= LEFT_WALL then -- hit left wall
+    local height = self:quad().height
+
+    if self.x < LEFT_WALL then -- hit left wall
+        gSounds['wallhit']:play()
+        self.x = LEFT_WALL
         self.dx = self.dx * -1
-    elseif self.x + width >= RIGHT_WALL then -- hit right wall
+    elseif self.x + width > RIGHT_WALL then -- hit right wall
+        gSounds['wallhit']:play()
+        self.x = RIGHT_WALL - width
         self.dx = self.dx * -1
-    elseif self.dy > BOTTOM_WALL then -- ball went out
-        self.dx = 0
-        self.x = VIRTUAL_HEIGHT / 2
-        self.y = VIRTUAL_WIDTH / 2
-    elseif self.dy <= TOP_WALL then -- hit top wall
-        self.dx = self.dx * -1
+    elseif self.y < TOP_WALL then -- hit top wall
+        gSounds['wallhit']:play()
+        self.y = TOP_WALL
         self.dy = self.dy * -1
+    elseif self.y + height > BOTTOM_WALL then -- ball went out
+        self:reset() -- TODO
     end
+
+    self.x = self.x + self.dx * dt
+    self.y = self.y + self.dy * dt
+end
+
+function Ball:reset()
+    self.dx = 0
+    self.x = VIRTUAL_HEIGHT / 2
+    self.y = VIRTUAL_WIDTH / 2
+end
+
+function Ball:serve()
+    self.dy = -100
+    self.dx = math.random() > 0.5 and -80 or 80
 end
 
 function Ball:render()
@@ -53,12 +72,20 @@ function Ball:boundingBox()
         x = self.x,
         y = self.y,
         width = quad.width,
-        heigth = quad.height
+        height = quad.height
     }
 end
 
-function Ball:collidesWith(box)
-    -- TODO
+function Ball:collidesWith(object)
+    local myBox = self:boundingBox()
+    local box = object:boundingBox()
+    return myBox.x < box.x + box.width and myBox.x + myBox.width > box.x
+        and myBox.y < box.y + box.height and myBox.y + myBox.height > box.y
+end
+
+function Ball:collidedWith(object)
+    self.dy = -100
+    self.y = object.y - self:boundingBox().height
 end
 
 return Ball

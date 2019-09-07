@@ -27,7 +27,7 @@ function Paddle:keyPressed(key)
     if key == 'p' then
         self.skin = self.skin < 4 and self.skin + 1 or 1
     elseif key == 'space' then
-        -- ?
+        -- TODO serve ball
     end
 end
 
@@ -48,6 +48,23 @@ end
 
 function Paddle:sprite()
     return self:quad().sprite
+end
+
+function Paddle:boundingBox()
+    local quad = self:quad()
+    return {
+        x = self.x,
+        y = self.y,
+        width = quad.width,
+        height = quad.height
+    }
+end
+
+function Paddle:collidesWith(object)
+    local myBox = self:boundingBox()
+    local box = object:boundingBox()
+    return myBox.x < box.x + box.width and myBox.x + myBox.width > box.x
+        and myBox.y < box.y + box.height and myBox.y + myBox.height > box.y
 end
 
 return Paddle
