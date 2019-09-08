@@ -1,9 +1,9 @@
 Class = require('modules/class')
 push = require('modules/push')
 StateMachine = require('modules/StateMachine')
+ZeroBraneDebugging = require('modules/ZeroBraneDebug')
 Quad = require('src/Quad')
 require('src/Quads') -- TODO contain quad utils functions
-
 
 BaseState = require('src/states/BaseState')
 StartState = require('src/states/StartState')
@@ -12,10 +12,6 @@ NewHighScoreState = require('src/states/NewHighScoreState')
 PlayState = require('src/states/PlayState')
 SelectPaddleState = require('src/states/SelectPaddleState')
 PlayState = require('src/states/PlayState')
-
-Object = require('src/Object')
-Paddle = require('src/Paddle')
-Ball = require('src/Ball')
 
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
@@ -30,6 +26,7 @@ gSounds = {}
 gStateMachine = {}
 
 function love.load()
+    ZeroBraneDebugging:enable()
     love.keyboard.keysDown = {}
 
     math.randomseed(os.time())
@@ -49,6 +46,7 @@ function love.load()
 
     gSprites['paddles'] = generatePaddlesQuads(gTextures['breakout'])
     gSprites['balls'] = generateBallsQuads(gTextures['breakout'])
+    gSprites['bricks'] = generateBricksQuads(gTextures['breakout'])
 
     gSounds['brickhit1'] = love.audio.newSource('assets/brick-hit-1.wav', 'static')
     gSounds['brickhit2'] = love.audio.newSource('assets/brick-hit-2.wav', 'static')

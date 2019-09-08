@@ -1,3 +1,4 @@
+local Object = require('src/Object')
 local Paddle = Class{__includes = Object}
 
 local PADDLE_X_OFFSET = 32

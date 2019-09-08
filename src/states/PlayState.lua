@@ -1,32 +1,33 @@
+local Paddle = require('src/Paddle')
+local Ball = require('src/Ball')
+local Brick = require('src/Brick')
+local LevelMaker = require('src/LevelMaker')
+local Level = require('src/Level')
+
 local PlayState = Class{__includes = BaseState}
 
 function PlayState:init()
     self.isPaused = false
-    self.color = {}
     self.paddle = Paddle()
     self.ball = Ball()
-end
-
-function PlayState:enter(params)
-    -- TODO
-end
-
-function PlayState:exit()
-    -- TODO
+    self.levelMaker = LevelMaker()
+    self.level = self.levelMaker:createLevel()
 end
 
 function PlayState:update(dt)
     if self.isPaused then
         return
     end
+
     self.ball:update(dt)
     self.paddle:update(dt)
+
+    self.level:collidesWith(self.ball)
 
     if self.ball:collidesWith(self.paddle) then
         gSounds['paddlehit']:play()
         self.ball:collidedWith(self.paddle)
         self.paddle:collidedWith(self.ball)
-        self:pause()
     end
 end
 
@@ -47,11 +48,10 @@ end
 
 function PlayState:render()
     if self.isPaused then
-        local r, g, b, a = love.graphics.getColor()
-        self.color = { r, g, b, a }
         love.graphics.setColor({ 0.5, 0.5, 0.5, 0.5 })
     end
 
+    self.level:render()
     self.paddle:render()
     self.ball:render()
 

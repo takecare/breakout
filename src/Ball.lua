@@ -1,3 +1,4 @@
+local Object = require('src/Object')
 local Ball = Class{__includes = Object}
 
 local TOP_WALL = 0
@@ -84,8 +85,13 @@ function Ball:collidesWith(object)
 end
 
 function Ball:collidedWith(object)
-    self.dy = -100
-    self.y = object.y - self:boundingBox().height
+    if self.y < object.y then
+        self.dy = -100
+        self.y = object.y - self:boundingBox().height
+    else
+        self.dy = 100
+        -- self.y = object.y + self:boundingBox().height
+    end
 end
 
 return Ball
