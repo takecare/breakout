@@ -85,6 +85,7 @@ function Ball:collidesWith(object)
 end
 
 function Ball:collidedWith(object)
+    -- TODO better collision support for when the ball hits the side of a brick
     if self.y < object.y then
         self.dy = -100
         self.y = object.y - self:boundingBox().height

@@ -36,6 +36,7 @@ function Brick:collidesWith(object)
 
     local myBox = self:boundingBox()
     local box = object:boundingBox()
+
     return myBox.x < box.x + box.width and myBox.x + myBox.width > box.x
         and myBox.y < box.y + box.height and myBox.y + myBox.height > box.y
 end
