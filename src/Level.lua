@@ -1,13 +1,5 @@
 Level = Class{}
 
-function printTable(table)
-    for i,line in ipairs(table) do
-      for j,v in ipairs(line) do
-        print('('..i..','..j..'): '..v.x..','..v.y)
-      end
-    end
-end
-
 function Level:init(bricks)
     self.bricks = bricks ~= nil and bricks or {}
 end
