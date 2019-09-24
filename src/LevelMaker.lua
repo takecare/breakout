@@ -34,7 +34,7 @@ function LevelMaker:createLevel(minHorizontalMargin, verticalMargin, numOfRows)
     local maxBricksPerRow = math.floor(availableWidth / brickWidth)
     local maxRowWidth = maxBricksPerRow * brickWidth
     local remainingWidth = availableWidth - maxRowWidth
-    local leftMargin = math.max(remainingWidth, minHorizontalMargin) / 2 + minHorizontalMargin
+    local leftMargin = math.min(remainingWidth, minHorizontalMargin) / 2 + minHorizontalMargin
 
     brick.x = leftMargin
 
@@ -43,7 +43,7 @@ function LevelMaker:createLevel(minHorizontalMargin, verticalMargin, numOfRows)
             local r,g,b,a = love.graphics.getColor()
             
             love.graphics.setColor(0.4,0.4,0.4,0.5)
-            love.graphics.rectangle('fill',leftMargin,0,VIRTUAL_WIDTH-leftMargin*2,VIRTUAL_HEIGHT)
+            love.graphics.rectangle('fill',leftMargin,0, VIRTUAL_WIDTH - leftMargin * 2,VIRTUAL_HEIGHT)
 
             love.graphics.setColor(0.7,0.4,0.4,0.5)
             love.graphics.rectangle('fill',0,0,minHorizontalMargin,VIRTUAL_HEIGHT)

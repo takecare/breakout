@@ -6,9 +6,9 @@ local Level = require('src/Level')
 
 local PlayState = Class{__includes = BaseState}
 
-local VERTICAL_MARGIN = 20
-local HORIZONTAL_MARGIN = 10
-local NUM_ROWS = 3
+local VERTICAL_MARGIN = 30
+local HORIZONTAL_MARGIN = 20
+local NUM_ROWS = 5
 
 function PlayState:init()
     self.isPaused = false
