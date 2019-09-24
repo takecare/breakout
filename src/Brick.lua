@@ -15,12 +15,7 @@ end
 
 function Brick:render()
     if self.alive then
-        local r,g,b,a = love.graphics.getColor()
         love.graphics.draw(gTextures['breakout'], self:sprite(), self.x, self.y)
-
-        love.graphics.setColor(0.7,0.6,0.5,0.5)
-        love.graphics.rectangle('fill',self.x,self.y,self:boundingBox().width,self:boundingBox().height)
-        love.graphics.setColor(r,g,b,a)
     end
 end
 
