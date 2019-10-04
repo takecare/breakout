@@ -6,12 +6,16 @@ local Level = require('src/Level')
 
 local PlayState = Class{__includes = BaseState}
 
+local VERTICAL_MARGIN = 30
+local HORIZONTAL_MARGIN = 20
+local NUM_ROWS = 5
+
 function PlayState:init()
     self.isPaused = false
     self.paddle = Paddle()
     self.ball = Ball()
     self.levelMaker = LevelMaker()
-    self.level = self.levelMaker:createLevel()
+    self.level = self.levelMaker:createLevel(HORIZONTAL_MARGIN, VERTICAL_MARGIN, NUM_ROWS)
 end
 
 function PlayState:update(dt)

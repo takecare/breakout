@@ -1,12 +1,12 @@
 local Object = require('src/Object')
 local Brick = Class{__includes = Object}
 
-function Brick:init(x, y)
+function Brick:init(x, y, tier, color)
     self.x = x
     self.y = y
     self.alive = true
-    self.tier = 2
-    self.color = 1
+    self.tier = tier ~= nil and tier or 2
+    self.color = color ~= nil and color or 1
 end
 
 function Brick:update(dt)

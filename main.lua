@@ -1,9 +1,12 @@
 Class = require('modules/class')
 push = require('modules/push')
 StateMachine = require('modules/StateMachine')
+Debugger = require('src/Debugger')
 ZeroBraneDebugging = require('modules/ZeroBraneDebug')
 Quad = require('src/Quad')
 require('src/Quads') -- TODO contain quad utils functions
+
+DEBUGGER = Debugger()
 
 BaseState = require('src/states/BaseState')
 StartState = require('src/states/StartState')
@@ -82,6 +85,7 @@ function love.load()
 end
 
 function love.update(dt)
+    DEBUGGER:update(dt)
     gStateMachine:update(dt)
 end
 
@@ -97,6 +101,7 @@ function love.draw()
         VIRTUAL_HEIGHT / gTextures['background']:getHeight()
     )
 
+    DEBUGGER:render()
     gStateMachine:render()
 
     push:apply('end')
@@ -104,6 +109,7 @@ function love.draw()
 end
 
 function love.keypressed(key)
+    DEBUGGER:keyPressed(key)
     gStateMachine:keyPressed(key)
 end
 
