@@ -6,5 +6,6 @@ function BaseState:exit() end
 function BaseState:update(dt) end
 function BaseState:keyPressed(key) end
 function BaseState:render() end
+function BaseState:pause() end
 
 return BaseState

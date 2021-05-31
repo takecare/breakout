@@ -6,22 +6,28 @@ local Level = require('src/Level')
 
 local PlayState = Class{__includes = BaseState}
 
-local VERTICAL_MARGIN = 30
-local HORIZONTAL_MARGIN = 20
-local NUM_ROWS = 5
-
 function PlayState:init()
     self.isPaused = false
-    self.paddle = Paddle()
-    self.ball = Ball()
-    self.levelMaker = LevelMaker()
-    self.level = self.levelMaker:createLevel(HORIZONTAL_MARGIN, VERTICAL_MARGIN, NUM_ROWS)
+    self.paddle = nil
+    self.ball = nil
+    self.level = nil
+end
+
+function PlayState:enter(params)
+    self.isPaused = false
+    self.paddle = params.paddle
+    self.ball = params.ball
+    self.level = params.level
+
+    self.ball:serve()
 end
 
 function PlayState:update(dt)
     if self.isPaused then
         return
     end
+
+    self.paddle:handleInput()
 
     self.ball:update(dt)
     self.paddle:update(dt)
@@ -33,14 +39,25 @@ function PlayState:update(dt)
         self.ball:collidedWith(self.paddle)
         self.paddle:collidedWith(self.ball)
     end
+
+    if self.ball:isOut() then
+        gStateMachine:change(
+            'serve',
+            {
+                paddle = self.paddle,
+                ball = self.ball,
+                level = self.level
+            }
+        )
+    end
 end
 
 function PlayState:keyPressed(key)
     if key == 'escape' then
         gSounds['pause']:play()
         self:pause()
-    elseif key == 'space' then
-        self.ball:serve()
+    -- elseif key == 'space' then
+    --     self.ball:serve()
     else 
         self.paddle:keyPressed(key)
     end

@@ -3,7 +3,7 @@ local StartState = Class{__includes = BaseState}
 local options = {
     {
         title = 'START',
-        action = function() gStateMachine:change('play') end,
+        action = function() gStateMachine:change('serve') end,
         render = function(this, isSelected)
             updateMenuColor(isSelected)
             love.graphics.printf(this.title, 0, VIRTUAL_HEIGHT / 2 + 60, VIRTUAL_WIDTH, 'center')

@@ -4,7 +4,7 @@ StateMachine = require('modules/StateMachine')
 Debugger = require('src/Debugger')
 ZeroBraneDebugging = require('modules/ZeroBraneDebug')
 Quad = require('src/Quad')
-require('src/Quads') -- TODO contain quad utils functions
+require('src/Quads')
 
 DEBUGGER = Debugger()
 
@@ -12,6 +12,7 @@ BaseState = require('src/states/BaseState')
 StartState = require('src/states/StartState')
 HighScoreState = require('src/states/HighScoreState')
 NewHighScoreState = require('src/states/NewHighScoreState')
+ServeState = require('src/states/ServeState')
 PlayState = require('src/states/PlayState')
 SelectPaddleState = require('src/states/SelectPaddleState')
 PlayState = require('src/states/PlayState')
@@ -76,6 +77,7 @@ function love.load()
         ['start'] = function() return StartState() end,
         ['highscores'] = function() return HighScoreState() end,
         ['newhighscore'] = function() return NewHighScoreState() end,
+        ['serve'] = function() return ServeState() end,
         ['play'] = function() return PlayState() end,
         ['select'] = function() return SelectPaddleState() end,
         ['serve'] = function() return ServeState() end,

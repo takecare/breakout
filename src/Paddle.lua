@@ -3,7 +3,7 @@ local Paddle = Class{__includes = Object}
 
 local PADDLE_X_OFFSET = 32
 local PADDLE_Y_OFFSET = 32
-local SPEED = 110
+local SPEED = 250
 
 function Paddle:init(x, y)
     self.skin = 1
@@ -13,12 +13,21 @@ function Paddle:init(x, y)
     self.dx = 0
 end
 
--- TODO implement dragging: paddle moves a bit after player releasing key
 function Paddle:handleInput()
+    -- hacky way of having different levels off acceleration:
+    -- define ranges and check in which range dx is in, using diferent
+    -- dividends accordingly
+    
     if love.keyboard.isDown('left') then
-        self.dx = -SPEED
+        self.dx = self.dx - SPEED / 40
+        if (self.dx < -SPEED) then
+            self.dx = -SPEED
+        end
     elseif love.keyboard.isDown('right') then
-        self.dx = SPEED
+        self.dx = self.dx + SPEED / 40
+        if (self.dx > SPEED) then
+            self.dx = SPEED
+        end
     else
         self.dx = 0
     end
@@ -27,13 +36,10 @@ end
 function Paddle:keyPressed(key)
     if key == 'p' then
         self.skin = self.skin < 4 and self.skin + 1 or 1
-    elseif key == 'space' then
-        -- TODO serve ball
     end
 end
 
 function Paddle:update(dt)
-    self:handleInput()
     local width = self:quad().width
     local x = self.x + self.dx * dt
     self.x = self.dx < 0 and math.max(0, x) or math.min(VIRTUAL_WIDTH - width, x)
